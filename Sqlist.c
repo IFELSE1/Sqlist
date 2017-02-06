@@ -101,8 +101,12 @@ int ListEmpty(Sqlist_TypeDef sqlist)
   *			FUN_ERROR：失败
   */
 FUN_Status_TypeDef CleanList(Sqlist_TypeDef *sqlist)
-{
-	free(sqlist);
+{	
+	int i;
+	for (i=0;i<MAXSIZE;i++){
+		sqlist->data[i] = 0x00;
+	}
+	sqlist->length = 0;
 	return FUN_OK;
 }
 
@@ -214,6 +218,7 @@ int main(void)
 	int i=0;
 	Sqlist_TypeDef sqlist;
 	Elem_TypeDef deletE=0;
+	int a;
 	
 	InitList(&sqlist);
 	printf("%d\n",ListLength(sqlist));
@@ -229,10 +234,14 @@ int main(void)
 	}
 	printf("\n\n\n");
 	ListInsert(&sqlist,3,999);
+	ListDelete(&sqlist,0,&a);
 	for (i=0;i<10;i++){
 		printf("%d\n",sqlist.data[i]);
 	}
 	printf("%d\n",ListLength(sqlist));
+	CleanList(&sqlist);
+	printf("%d\n",sqlist.data[5]);
+	printf("%d\n",sqlist.data[9]);
 	
 }
 
